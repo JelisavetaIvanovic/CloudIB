@@ -7,7 +7,7 @@ const Table: React.FC<TableProps> = ({ headerArray, bodyArray }) => {
   return (
     <div style={{ maxHeight: '400px', overflowY: 'auto', border: '1px solid #ddd' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
+        <thead style={{position: 'sticky', zIndex: '10', top: '0', backgroundColor: '#f19999'}}>
           <tr>
             {headerArray.map((header, index) => (
               <th key={index}>{header}</th>

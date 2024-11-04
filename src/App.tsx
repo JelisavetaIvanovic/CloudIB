@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Transaction, transactions } from './data/index';
 import './App.css';
 import MainTable from './components/MainTable';
-import FilterComponent from './components/FilterComponent';
+import FilterByCategoryComponent from './components/FilterByCategoryComponent';
 import AddComponent from './components/AddComponent';
 import SummaryComponent from './components/SummaryComponent';
 import DetailsViewComponent from './components/DetailsViewComponent';
 import { TransactionsProvider } from './context/context';
+import FilterByDateComponent from './components/FilterByDateComponent';
 
 
 function App() {
@@ -23,11 +24,14 @@ function App() {
       </div>
       <div className='body'>
           <div className='tableHeader'>
-            <div className='appComponent' title="Add new transaction"><AddComponent /></div>
-            <div className='transactions'><p>Transactions</p></div>
-            <div className='filterSumarry'>
-              <FilterComponent title="Filter transactions by category" />
+            <div className='leftSide'>
+              <div className='addComponent' title="Add new transaction"><AddComponent /></div>
               <SummaryComponent title="Summary of transactions" data={[]}/> 
+            </div>
+            <div className='transactions'><p>Transactions</p></div>
+            <div className='rightSide'>
+              <FilterByCategoryComponent title="Filter transactions by category" />
+              <FilterByDateComponent title="Filter transactions by date" />
             </div>
           </div>
           <div>

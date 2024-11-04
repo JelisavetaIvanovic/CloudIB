@@ -1,18 +1,18 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import BasicModal from './BasicModal';
 import Button from '@mui/material/Button';
-import { Transaction } from '../data';
 import { useTransactionsContext } from '../context/context';
 import { FormData, ErrorFields } from '../data';
 
-const AddComponent: React.FC = () => {
+const EditComponent: React.FC = () => {
     const { data, setData } = useTransactionsContext();
+    const { detailsViewId, setDetailsViewId } = useTransactionsContext();
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormData>({
-        description: '',
-        amount: 0,
-        type: '',
-        category: '',
+        description: detailsViewId !== null ? data[detailsViewId - 1].description : '',
+        amount: detailsViewId !== null ? data[detailsViewId - 1].amount : 0,
+        type: detailsViewId !== null ? data[detailsViewId - 1].type : '',
+        category: detailsViewId !== null ? data[detailsViewId - 1].category : '',
     });
     const [errorFields, setErrorFields] = useState<ErrorFields>({
         description: false,
@@ -62,37 +62,19 @@ const AddComponent: React.FC = () => {
             }
             return;        
         }
-
-        const newItem: Transaction = {
-            id: data.length + 1,
-            date: new Date().toISOString().split('T')[0],
-            ...formData,
-        };
-        setData([...data, newItem]);
+        if (detailsViewId !== null) {
+            const updatedData = data.map(transaction => {
+                if (transaction.id === detailsViewId) {
+                    return {
+                        ...transaction,
+                        ...formData, 
+                    };
+                }
+                return transaction; 
+            });
+            setData(updatedData);
+        }
         setIsAddModalVisible(false);
-        setFormData({
-          description: '',
-          amount: 0,
-          type: '',
-          category: '',
-        });
-        setErrorFields({
-            description: false,
-            amount: false,
-            type: false,
-            category: false,
-        });
-    };
-
-    const handleCloseModal = () => {
-        setIsAddModalVisible(false);
-        setFormData({
-            description: '',
-            amount: 0,
-            type: '',
-            category: '',
-        });
-
         setErrorFields({
             description: false,
             amount: false,
@@ -103,8 +85,8 @@ const AddComponent: React.FC = () => {
 
     return (
         <>
-            <BasicModal isVisible={isAddModalVisible} onClose={handleCloseModal} title="Add transaction">
-                <div>
+            <BasicModal isVisible={isAddModalVisible} onClose={() => {setDetailsViewId(null);}} title="Edit transaction">
+            <div>
                     <form onSubmit={handleSubmit} className="form-add-form">
                         <div>
                             <label>*Description:</label>
@@ -159,11 +141,11 @@ const AddComponent: React.FC = () => {
                 sx={{ backgroundColor: '#e91b1b', height: '30px' }}
             >
                 <span className="material-symbols-outlined">
-                    add
+                    edit_square
                 </span>
             </Button>
             
         </>
     );
 };
-export default AddComponent;
+export default EditComponent;

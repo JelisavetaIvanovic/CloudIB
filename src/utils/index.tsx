@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { SummaryData, Transaction } from "../data";
 
 export const calculateSummary = (data: Transaction[]): SummaryData => {
@@ -16,6 +17,16 @@ export const calculateSummary = (data: Transaction[]): SummaryData => {
     };
 };
 
-export const filterDataByCategory = (data: Transaction[], category: string) => {
+export const filterDataByCategory = (data: Transaction[], category: string): Transaction[] => {
     return data.filter(( trans: Transaction ) => trans.category === category)
 }
+
+export const filterDataByDate = (data: Transaction[], startDate: Dayjs | null, endDate: Dayjs | null): Transaction[] => {
+    return data.filter((trans: Transaction) => {
+        const transDate = new Date(trans.date);
+        const startCondition = startDate ? transDate >= startDate.startOf('day').toDate() : true;
+        const endCondition = endDate ? transDate <= endDate.endOf('day').toDate() : true;
+        return startCondition && endCondition;
+    });
+}
+ 

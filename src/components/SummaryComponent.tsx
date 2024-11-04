@@ -7,7 +7,6 @@ import { calculateSummary } from '../utils';
 
 
 const SummaryComponent: React.FC<SummaryComponentProps> = ({title}) => {
-    
     const { data } = useTransactionsContext();
     const [summaryData, setSummaryData] = useState<SummaryData>({ totalIncome: 0, totalExpenses: 0, balance: 0 });
     const [isSummaryModalVisible, setIsSummaryModalVisible] = useState<boolean>(false);

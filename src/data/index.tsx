@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type Transaction = {
@@ -46,6 +47,10 @@ export interface TransactionsContextType {
   setData: Dispatch<SetStateAction<Transaction[]>>;
   detailsViewId: number | null;
   setDetailsViewId: Dispatch<SetStateAction<number | null>>;
+  startDate: Dayjs | null;
+  setStartDate: Dispatch<SetStateAction<Dayjs | null>>;
+  endDate: Dayjs | null;
+  setEndDate: Dispatch<SetStateAction<Dayjs | null>>;
 }
 
 export interface TransactionsProviderProps {
@@ -75,3 +80,17 @@ export const transactions: Transaction[] = [
   { id: 19, description: 'Phone Bill', amount: -40, type: 'Expense', category: 'Utilities', date: '2024-06-19' },
   { id: 20, description: 'Streaming Subscription', amount: -10, type: 'Expense', category: 'Entertainment', date: '2024-06-20' }
 ];
+
+export interface FormData {
+  description: string;
+  amount: number;
+  type: string;
+  category: string;
+}
+
+export interface ErrorFields {
+  description: boolean;
+  amount: boolean;
+  type: boolean;
+  category: boolean;
+}

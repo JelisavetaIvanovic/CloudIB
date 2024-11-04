@@ -41,22 +41,22 @@ h1 {
   height: 32px;
   background-color: #e91b1b;
   align-items: center;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
-.appComponent {
-  flex: 0 0 10%;
+.leftSide {
+  flex: 0 0 20%;
   display: flex;
   justify-content: start;
 }
 
 .transactions {
-  flex: 0 0 75%;
+  flex: 0 0 60%;
   justify-content: center;
 }
 
-.filterSumarry  {
+.rightSide  {
   display: flex;
   justify-content: end;
-  flex: 0 0 15%
+  flex: 0 0 20%
 }
